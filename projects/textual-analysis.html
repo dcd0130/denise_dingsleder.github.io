@@ -66,7 +66,7 @@
 			<ul class="default">
 				<li><strong>Skills:</strong> consuming a live REST API, NLP entity extraction with spaCy, joining unstructured text data to structured financial data, and handling real-world data-matching failures gracefully instead of hiding them.</li>
 				<li><strong>Where it's used:</strong> event-study methodology (does news move a stock) is a genuine quant-research technique, and API + NLP pipelines like this one are core to alternative-data research at funds.</li>
-				<li><strong>Reflection:</strong> this was the most "unfinished" of my projects, and I learned as much from where the pipeline broke (ticker matching) as from where it worked &mdash; real data is messier than a clean class dataset.</li>
+				<li><strong>Reflection:</strong> the real lesson here came from what broke, not what worked &mdash; the company-tagging problem in the underlying data (see "What We Found" below) mattered more to the result than the NLP or event-study code itself. It taught me to treat a pipeline's output as suspect until I've checked the data feeding it, not just the code processing it.</li>
 			</ul>
 
 			<h2>What We Found</h2>
