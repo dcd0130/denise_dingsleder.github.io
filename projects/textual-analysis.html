@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Textual Analysis: WSJ &amp; S&amp;P 500 — Denise Dingsleder</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Python/NLP project integrating the WSJ API and spaCy to explore stock price behavior around obituary coverage of individuals tied to S&P 500 companies." />
+		<link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			body { background: #fff; }
+			.case-wrap { max-width: 760px; margin: 0 auto; padding: 3em 1.5em 6em 1.5em; }
+			.case-back { display: inline-block; margin-bottom: 2.5em; font-size: 0.8em; }
+			.case-hero h1 { font-size: 1.8em; border-left: 4px solid #5b52a3; padding-left: 0.5em; color: #454545; margin-bottom: 0.4em; }
+			.case-meta { color: #b2b2b2; font-size: 0.85em; margin: 0 0 2em 0; }
+			.tech-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em; padding: 0; margin: 0 0 2.5em 0; }
+			.tech-pills li { border: 1px solid #e2e2e2; border-radius: 2em; padding: 0.3em 1em; font-size: 0.75em; color: #787878; }
+			.case-wrap h2 { font-size: 1.2em; border-left: 4px solid #5b52a3; padding-left: 0.5em; margin-top: 2.5em; color: #454545; }
+			.case-figure { margin: 2em 0; }
+			.case-figure img { width: 100%; border-radius: 4px; display: block; }
+			.case-figure figcaption { font-size: 0.8em; color: #b2b2b2; margin-top: 0.6em; }
+			.hero-caption { font-size: 0.8em; color: #b2b2b2; font-style: italic; margin: 0.6em 0 0 0; }
+			.case-note { border-left: 4px solid #d68a45; padding: 0.2em 0 0.2em 1em; color: #787878; font-size: 0.85em; margin: 1.5em 0; }
+			.case-actions { margin-top: 3em; }
+			.case-wrap ul.default { margin: 0 0 2em 0; padding-left: 1.2em; list-style: disc; }
+			.case-wrap ul.default li { margin-bottom: 0.6em; color: #a2a2a2; }
+			.case-wrap p { color: #a2a2a2; }
+			.case-degree { color:#c2c2c2; font-size:0.78em; font-style:italic; margin: 3em 0 0 0; }
+			.case-details { margin: 2.5em 0; border:1px solid #e2e2e2; border-radius:6px; padding: 0.2em 1.2em; }
+			.case-details summary { cursor:pointer; font-weight:600; color:#5b52a3; padding:1em 0; }
+			.case-details summary:hover { color:#d68a45; }
+			.case-details pre { background:#f7f7f7; border-radius:4px; padding:1em; overflow-x:auto; font-size:0.78em; line-height:1.5em; margin: 1em 0; }
+			.case-details code { background:none; padding:0; font-size:1em; }
+			.case-details p { color:#a2a2a2; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div class="case-wrap">
+			<a class="case-back" href="../index.html#projects">&larr; Back to Portfolio</a>
+			<header class="case-hero">
+				<h1>Textual Analysis: WSJ &amp; S&amp;P 500</h1>
+				<p class="case-meta">Textual Analysis in Business &middot; 4-person team &middot; Python / NLP &middot; May 2024</p>
+				<ul class="tech-pills">
+					<li>Python</li>
+					<li>spaCy NER</li>
+					<li>REST API Integration</li>
+					<li>pandas</li>
+				</ul>
+			</header>
+
+			<div class="case-figure">
+				<img src="../images/fulls/textual.jpg" alt="Abstract graphic representing text analysis and data extraction" />
+				
+			</div>
+
+			<h2>Overview</h2>
+			<p>An exploratory project asking an event-study-style question: does a company's stock price move around obituary news coverage of people tied to that company &mdash; executives, founders, board members? The project combines a live news API with NLP entity extraction and financial market data to build a pipeline for testing that question.</p>
+
+			<h2>What We Built</h2>
+			<p>As a 4-person team, we integrated the Wall Street Journal's article API (via RapidAPI) to search and retrieve obituary coverage, used spaCy's named-entity recognition to extract people and organizations from article text, cross-referenced the companies mentioned against a S&amp;P 500 company list, and wrote a pipeline to look up each company's ticker and pull historical closing prices around the article's publication date. My focus was the NER extraction and the ticker/price lookup pipeline.</p>
+
+			<h2>What We Learned</h2>
+			<ul class="default">
+				<li><strong>Skills:</strong> consuming a live REST API, NLP entity extraction with spaCy, joining unstructured text data to structured financial data, and handling real-world data-matching failures gracefully instead of hiding them.</li>
+				<li><strong>Where it's used:</strong> event-study methodology (does news move a stock) is a genuine quant-research technique, and API + NLP pipelines like this one are core to alternative-data research at funds.</li>
+				<li><strong>Reflection:</strong> this was the most "unfinished" of my projects, and I learned as much from where the pipeline broke (ticker matching) as from where it worked &mdash; real data is messier than a clean class dataset.</li>
+			</ul>
+
+			<h2>What We Found</h2>
+			<p>The pipeline ran end-to-end &mdash; search, NER, ticker lookup &mdash; but it surfaced a data-quality problem before it ever reached stock prices: the WSJ API's own company-tagging turned out to be unreliable. Across the 17 (company, article) pairs the API returned, only 6 distinct obituaries were actually represented, and most of the company tags had no real connection to the person who died. Anne Innis Dagg, a giraffe researcher, was tagged to American Tower, Booking Holdings, and Invitation Homes; O.J. Simpson's obituary was tagged to American Tower, Brown &amp; Brown, Otis Worldwide, and Robert Half &mdash; none of these companies have any evident link to either person. Only one obituary (Donald E. Petersen, a former Ford CEO) was correctly tagged to its real company, Ford Motor Company &mdash; but it was also wrongly tagged to five others.</p>
+			<p class="case-note">That's the honest headline result: the entity-linking step, not the price lookup, turned out to be the real bottleneck. A trustworthy version of this study would need its own company-matching &mdash; for example, running the spaCy NER output against a real list of each company's executives and board members &mdash; rather than relying on the API's tagging. Surfacing that is exactly what a proof-of-concept pipeline is supposed to do.</p>
+
+			<details class="case-details">
+				<summary>Technical Deep-Dive: NLP &amp; API Pipeline</summary>
+				<p><strong>What "named-entity recognition" is actually doing.</strong> It would be simple, but brittle, to just scan obituary text for a hard-coded list of company names. spaCy's <code>en_core_web_sm</code> model does something different: it's a statistical model trained on large amounts of labeled text to recognize the <em>pattern</em> of how organization names, person names, dates, and places tend to appear in a sentence &mdash; capitalization, surrounding words, position &mdash; and predicts a label (<code>ORG</code>, <code>PERSON</code>, <code>DATE</code>, ...) for each span of text, with a confidence behind that prediction. That's what makes it generalize to company names never seen during training, and it's also exactly why it can mislabel or miss things in messy real-world text &mdash; it's a prediction, not a lookup.</p>
+				<p>My part of the shared pipeline: named-entity recognition on obituary text with spaCy, then a ticker/price lookup against the WSJ API. Entity extraction:</p>
+				<pre><code>nlp = spacy.load("en_core_web_sm")
+
+doc = nlp(content)
+for ent in doc.ents:
+    print(ent.text, ent.start_char, ent.end_char, ent.label_)</code></pre>
+				<p>Each extracted company name is matched against the S&amp;P 500 list, then looked up for a ticker and closing price around the article's publish date via the WSJ RapidAPI endpoint:</p>
+				<pre><code>def get_ticker_symbol(company_name):
+    url = "https://wall-street-journal.p.rapidapi.com/api/v1/searchCompanyByKeyword"
+    headers = {
+        "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+        "X-RapidAPI-Host": "wall-street-journal.p.rapidapi.com"
+    }
+    querystring = {"keyword": company_name}
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code == 200:
+        data = response.json()
+        if data['data'] and len(data['data']) &gt; 0:
+            return data['data'][0]['ticker']
+    return None</code></pre>
+				<p>The data-quality problem described above (in "What We Found") is visible directly in the raw CSV the API returned &mdash; grouping by headline shows the same obituary tagged to several unrelated companies:</p>
+				<pre><code>&gt;&gt;&gt; df.groupby('headline')['company name'].apply(list)
+
+"O.J. Simpson, Whose Murder Trial..."   [American Tower, Brown &amp; Brown, Otis Worldwide, Robert Half]
+"Anne Innis Dagg, Giraffe Researcher..." [American Tower, Booking Holdings, Invitation Homes]
+"Donald E. Petersen, Who Boosted..."    [Ball Corporation, Boeing, Ford Motor Company, General Motors, ...]</code></pre>
+				<p>None of O.J. Simpson's four tagged companies, and only one of Donald Petersen's six, have any real connection to the person &mdash; which is what made the ticker/price-lookup step downstream fundamentally unreliable, independent of the API rate limits or ticker-matching gaps.</p>
+			</details>
+
+			<div class="case-actions">
+				<ul class="actions">
+					<li><a href="https://github.com/dcd0130/Textual-Analysis-WSJ-Obituaries" target="_blank" class="button primary">View Code on GitHub</a></li>
+					<li><a href="../index.html#projects" class="button">Back to Portfolio</a></li>
+				</ul>
+				<p class="case-degree">Coursework project &mdash; Master of Science in Finance &mdash; University of Colorado Boulder, Leeds School of Business</p>
+			</div>
+		</div>
+	</body>
+</html>

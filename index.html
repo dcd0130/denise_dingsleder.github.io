@@ -11,6 +11,11 @@
 		<title>Denise Dingsleder</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Portfolio of Denise Dingsleder, Senior Business Intelligence Analyst at Goldman Sachs &mdash; finance, data analytics, and technical projects, plus a background as a Division I alpine ski racer." />
+		<link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<style>
 			/* Larger avatar photo */
@@ -32,6 +37,47 @@
 			/* Two-tier About heading: big line, smaller line that fits in one row */
 			#about header.major h2 .heading-main { font-size: 1em; }
 			#about header.major h2 .heading-sub { display: inline-block; font-size: 0.62em; font-weight: 400; margin-top: 0.1em; }
+			/* Sub-group labels within Projects (e.g. "Finance & Analytics" vs "Technical Projects") */
+			#projects h3.project-group {
+				font-size: 0.8em;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: #d68a45;
+				font-weight: 600;
+				margin: 2em 0 0.75em 0;
+			}
+			#projects h3.project-group:first-of-type { margin-top: 1em; }
+			/* The "Overview" + "Show Code" button pair can be wider than a 3-column card at in-between
+			   viewport widths; Strata's ul.actions is flex with no wrap, so without this the second
+			   button overflows the card and gets cut off/overlaps the next column. Let it wrap instead. */
+			#projects .work-item ul.actions.small {
+				flex-wrap: wrap;
+				row-gap: 0.5em;
+				margin-top: 1.4em;
+			}
+			#projects .work-item ul.actions.small li {
+				flex-grow: 0;
+			}
+			/* The employer/school logos in Experience have different native aspect ratios (the CU Boulder
+			   logo is close to square, Goldman Sachs and Westminster are wide), and .image.fit only fixes
+			   width, not height &mdash; so at the same column width the near-square logo rendered visibly
+			   taller than the others. Give all four logos one fixed-height box and letterbox them inside
+			   it so they read as the same size. */
+			#experience .image.fit {
+				height: 100px;
+				width: auto;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 0 0 2em 0;
+			}
+			#experience .image.fit img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: contain;
+			}
 			/* Nature photo background in the left banner. Single pre-darkened image, scroll attachment
 			   (fixed attachment caused rendering glitches together with the fixed-position sidebar). */
 			#header {
@@ -180,12 +226,46 @@
 				<!-- Projects -->
 					<section id="projects">
 						<h2>Projects</h2>
+
+						<h3 class="project-group">Finance &amp; Analytics</h3>
+						<div class="row">
+							<article class="col-4 col-6-small col-12-xsmall work-item">
+								<a href="images/fulls/cfa.jpg" class="image fit thumb"><img src="images/thumbs/cfa.jpg" alt="CFA Research Challenge - equity research" /></a>
+								<h3>CFA Research Challenge</h3>
+								<p>Equity research report developed with a 4-person team &mdash; comps valuation &amp; risk analysis, 3rd place &mdash; December 2022.</p>
+								<ul class="actions small">
+									<li><a href="projects/cfa-research-challenge.html" class="button small">Overview</a></li>
+									<li><a href="https://github.com/dcd0130/CFA-Research-Challenge" target="_blank" class="button small">Show Code</a></li>
+								</ul>
+							</article>
+							<article class="col-4 col-6-small col-12-xsmall work-item">
+								<a href="images/fulls/unemployment.jpg" class="image fit thumb"><img src="images/thumbs/unemployment.jpg" alt="Unemployment Rates vs Government Spending, Monte Carlo simulation" /></a>
+								<h3>Unemployment vs. Government Spending: A Monte Carlo Analysis</h3>
+								<p>R analysis replicating and stress-testing a Taylor-rule critique with a Monte Carlo simulation, using FRED data 1947&ndash;2023 &mdash; December 2023.</p>
+								<ul class="actions small">
+									<li><a href="projects/unemployment-monte-carlo.html" class="button small">Overview</a></li>
+									<li><a href="https://github.com/dcd0130/Unemployment-Rates-vs-Government-Spending-as-percent-of-GDP" target="_blank" class="button small">Show Code</a></li>
+								</ul>
+							</article>
+							<article class="col-4 col-6-small col-12-xsmall work-item">
+								<a href="images/fulls/textual.jpg" class="image fit thumb"><img src="images/thumbs/textual.jpg" alt="Textual analysis of WSJ articles and S&amp;P 500 companies" /></a>
+								<h3>Textual Analysis: WSJ &amp; S&amp;P 500</h3>
+								<p>Python/NLP project built with a 4-person team, pulling WSJ articles via API and cross-referencing obituary coverage against S&amp;P 500 companies &mdash; May 2024.</p>
+								<ul class="actions small">
+									<li><a href="projects/textual-analysis.html" class="button small">Overview</a></li>
+									<li><a href="https://github.com/dcd0130/Textual-Analysis-WSJ-Obituaries" target="_blank" class="button small">Show Code</a></li>
+								</ul>
+							</article>
+						</div>
+
+						<h3 class="project-group">Technical Projects</h3>
 						<div class="row">
 							<article class="col-4 col-6-small col-12-xsmall work-item">
 								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="Senior Project - e-commerce website" /></a>
 								<h3>Senior Project</h3>
 								<p>E-commerce website built with Django, Python, CSS &amp; HTML &mdash; May 2023.</p>
 								<ul class="actions small">
+									<li><a href="projects/senior-project.html" class="button small">Overview</a></li>
 									<li><a href="https://github.com/dcd0130/D3" target="_blank" class="button small">Show Code</a></li>
 								</ul>
 							</article>
@@ -194,22 +274,25 @@
 								<h3>Mountain Kart</h3>
 								<p>A Mario-Kart-style math game built in Unity &mdash; May 2023.</p>
 								<ul class="actions small">
+									<li><a href="projects/mountain-kart.html" class="button small">Overview</a></li>
 									<li><a href="https://github.com/HannahSaethereng/Mountain-Kart" target="_blank" class="button small">Show Code</a></li>
 								</ul>
 							</article>
 							<article class="col-4 col-6-small col-12-xsmall work-item">
 								<a href="images/fulls/03.jpg" class="image fit thumb"><img src="images/thumbs/03.jpg" alt="Asteroids Game" /></a>
 								<h3>Asteroids Game</h3>
-								<p>A Java Asteroids-style game with custom visual effects &mdash; May 2022.</p>
+								<p>A Java Asteroids-style game built with two teammates, with custom visual effects &mdash; May 2022.</p>
 								<ul class="actions small">
+									<li><a href="projects/asteroids-game.html" class="button small">Overview</a></li>
 									<li><a href="https://github.com/dcd0130/Asteroids-Game" target="_blank" class="button small">Show Code</a></li>
 								</ul>
 							</article>
 							<article class="col-4 col-6-small col-12-xsmall work-item">
 								<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg" alt="Chatroom application" /></a>
 								<h3>Chatroom</h3>
-								<p>A real-time chatroom built in Java for Computer Networks &mdash; December 2022.</p>
+								<p>A real-time chatroom built in Java with one teammate for Computer Networks &mdash; December 2022.</p>
 								<ul class="actions small">
+									<li><a href="projects/chatroom.html" class="button small">Overview</a></li>
 									<li><a href="https://github.com/dcd0130/Chatroom" target="_blank" class="button small">Show Code</a></li>
 								</ul>
 							</article>
@@ -218,6 +301,7 @@
 								<h3>Database App</h3>
 								<p>A SQL database app covering Division I alpine ski race data &mdash; December 2022.</p>
 								<ul class="actions small">
+									<li><a href="projects/database-app.html" class="button small">Overview</a></li>
 									<li><a href="https://github.com/dcd0130/SQL-APP-Raceschedule" target="_blank" class="button small">Show Code</a></li>
 								</ul>
 							</article>

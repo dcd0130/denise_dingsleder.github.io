@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Database App: Ski Race Scheduler — Denise Dingsleder</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="A Java/JDBC console application over a relational database of Division I collegiate alpine ski race scheduling." />
+		<link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			body { background: #fff; }
+			.case-wrap { max-width: 760px; margin: 0 auto; padding: 3em 1.5em 6em 1.5em; }
+			.case-back { display: inline-block; margin-bottom: 2.5em; font-size: 0.8em; }
+			.case-hero h1 { font-size: 1.8em; border-left: 4px solid #5b52a3; padding-left: 0.5em; color: #454545; margin-bottom: 0.4em; }
+			.case-meta { color: #b2b2b2; font-size: 0.85em; margin: 0 0 2em 0; }
+			.tech-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em; padding: 0; margin: 0 0 2.5em 0; }
+			.tech-pills li { border: 1px solid #e2e2e2; border-radius: 2em; padding: 0.3em 1em; font-size: 0.75em; color: #787878; }
+			.case-wrap h2 { font-size: 1.2em; border-left: 4px solid #5b52a3; padding-left: 0.5em; margin-top: 2.5em; color: #454545; }
+			.case-figure { margin: 2em 0; }
+			.case-figure img { width: 100%; border-radius: 4px; display: block; }
+			.case-figure figcaption { font-size: 0.8em; color: #b2b2b2; margin-top: 0.6em; }
+			.hero-caption { font-size: 0.8em; color: #b2b2b2; font-style: italic; margin: 0.6em 0 0 0; }
+			.case-note { border-left: 4px solid #d68a45; padding: 0.2em 0 0.2em 1em; color: #787878; font-size: 0.85em; margin: 1.5em 0; }
+			.case-actions { margin-top: 3em; }
+			.case-wrap ul.default { margin: 0 0 2em 0; padding-left: 1.2em; list-style: disc; }
+			.case-wrap ul.default li { margin-bottom: 0.6em; color: #a2a2a2; }
+			.case-wrap p { color: #a2a2a2; }
+			.case-degree { color:#c2c2c2; font-size:0.78em; font-style:italic; margin: 3em 0 0 0; }
+			.case-details { margin: 2.5em 0; border:1px solid #e2e2e2; border-radius:6px; padding: 0.2em 1.2em; }
+			.case-details summary { cursor:pointer; font-weight:600; color:#5b52a3; padding:1em 0; }
+			.case-details summary:hover { color:#d68a45; }
+			.case-details pre { background:#f7f7f7; border-radius:4px; padding:1em; overflow-x:auto; font-size:0.78em; line-height:1.5em; margin: 1em 0; }
+			.case-details code { background:none; padding:0; font-size:1em; }
+			.case-details p { color:#a2a2a2; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div class="case-wrap">
+			<a class="case-back" href="../index.html#projects">&larr; Back to Portfolio</a>
+			<header class="case-hero">
+				<h1>Database App: Ski Race Scheduler</h1>
+				<p class="case-meta">Database Systems (with a project partner) &middot; Java + SQL &middot; December 2022</p>
+				<ul class="tech-pills">
+					<li>Java</li>
+					<li>JDBC</li>
+					<li>SQL / MariaDB</li>
+					<li>Relational Schema Design</li>
+				</ul>
+			</header>
+
+			<div class="case-figure">
+				<img src="../images/fulls/05.jpg" alt="Entity-relationship diagram of the ski race scheduling database schema" />
+				<p class="hero-caption">Diagram of the actual database schema (see the SQL in the deep-dive below).</p>
+			</div>
+
+			<h2>Overview</h2>
+			<p>A relational database and console application covering Division I collegiate alpine ski race scheduling, built with a project partner &mdash; drawing on my own background as a Division I ski racer for the domain.</p>
+
+			<h2>What We Built</h2>
+			<p>The schema models race venues, per-venue contacts, and races themselves (sex, date, discipline, status), with a relocation-history table for races that move venues. The Java console application connects over JDBC and supports searching races, cancelling or relocating a race, managing contacts, adding new venues, and reporting (e.g. the highest-elevation venue via a subquery). Every query uses parameterized prepared statements rather than string-built SQL, which avoids SQL-injection risk by construction.</p>
+
+			<h2>What We Learned</h2>
+			<ul class="default">
+				<li><strong>Skills:</strong> relational schema design (normalization, foreign keys), JDBC, parameterized queries, and translating a real domain (ski race scheduling) into tables.</li>
+				<li><strong>Where it's used:</strong> parameterized/prepared statements are the industry-standard defense against SQL injection &mdash; literally how production applications protect their databases.</li>
+				<li><strong>Reflection:</strong> designing the schema ourselves, rather than being handed one, was the real lesson &mdash; deciding what deserves its own table (like the relocation-history table) versus a status flag is a judgment call that shapes everything downstream.</li>
+			</ul>
+
+
+			<details class="case-details">
+				<summary>Technical Deep-Dive: Schema &amp; Prepared Statements</summary>
+				<p><strong>Fact tables vs. dimension tables.</strong> This schema splits cleanly into two kinds of tables, a pattern that shows up in almost every real database, not just data-warehouse designs. <code>Location</code> and <code>Contact</code> are <em>dimension tables</em>: relatively static, descriptive, lookup-style data &mdash; a resort's name only needs to be stored once, ever. <code>Race</code> is a <em>fact table</em>: every row is a discrete event (one race, on one date, at one location, with one contact), and it references the dimension tables by ID instead of repeating their details. The payoff is that if a resort's name changes, it's a one-row update in <code>Location</code> instead of a find-and-replace across every race ever held there &mdash; that's what "normalizing" a schema actually buys you.</p>
+				<p>The schema uses foreign keys with cascading/set-null rules so races stay consistent when a location or contact is removed:</p>
+				<pre><code>CREATE TABLE `Race` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) DEFAULT NULL,
+  `contact_id` int(11) DEFAULT NULL,
+  `sex` enum('F','M') NOT NULL,
+  `date` date NOT NULL,
+  `discipline` enum('GS','SL') NOT NULL,
+  `status` enum('A','C','R') NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `Race_ibfk_1` FOREIGN KEY (`location_id`) REFERENCES `Location` (`locationId`) ON DELETE SET NULL,
+  CONSTRAINT `Race_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `Contact` (`contactId`) ON DELETE SET NULL
+);</code></pre>
+				<p>Every query in the Java console app is a parameterized <code>PreparedStatement</code>, prepared once at connection time and reused &mdash; string values are always bound, never concatenated into the SQL, which rules out SQL injection by construction:</p>
+				<pre><code>private static final String SQL_QUERY_RACE_BY_LOCATION =
+    "SELECT Race.date, Race.sex, Race.discipline, Race.status"
+    + " FROM Race\n"
+    + "INNER JOIN Location ON Location.locationId = Race.location_id\n"
+    + "WHERE Location.resort = ?";
+
+private void queryRaceLocation(String location) throws SQLException {
+    queryRaceLocation.setString(1, location);
+    ResultSet results = queryRaceLocation.executeQuery();
+    ...
+}</code></pre>
+				<p><strong>What that JOIN is mechanically doing.</strong> <code>Race</code> only stores <code>location_id</code>, a bare number &mdash; on its own it can't tell you the resort's name. <code>INNER JOIN Location ON Location.locationId = Race.location_id</code> tells the database: for every row in <code>Race</code>, go find the one row in <code>Location</code> whose ID matches, and glue the two rows together into one wider row for the duration of this query. Nothing is duplicated in storage &mdash; the join happens on the fly, at query time &mdash; which is exactly why splitting the data into a fact table and dimension tables in the first place doesn't cost you the ability to ask a question like "every race at Snowbird" in a single query.</p>
+			</details>
+
+			<div class="case-actions">
+				<ul class="actions">
+					<li><a href="https://github.com/dcd0130/SQL-APP-Raceschedule" target="_blank" class="button primary">View Code on GitHub</a></li>
+					<li><a href="../index.html#projects" class="button">Back to Portfolio</a></li>
+				</ul>
+				<p class="case-degree">Coursework project &mdash; Bachelor of Science, Computer Information Systems &amp; Finance &mdash; Westminster College</p>
+			</div>
+		</div>
+	</body>
+</html>

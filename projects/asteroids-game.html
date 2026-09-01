@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Asteroids Game — Denise Dingsleder</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="A Java Asteroids-style arcade game with ray-casting collision detection, built on an instructor-provided game engine skeleton." />
+		<link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			body { background: #fff; }
+			.case-wrap { max-width: 760px; margin: 0 auto; padding: 3em 1.5em 6em 1.5em; }
+			.case-back { display: inline-block; margin-bottom: 2.5em; font-size: 0.8em; }
+			.case-hero h1 { font-size: 1.8em; border-left: 4px solid #5b52a3; padding-left: 0.5em; color: #454545; margin-bottom: 0.4em; }
+			.case-meta { color: #b2b2b2; font-size: 0.85em; margin: 0 0 2em 0; }
+			.tech-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em; padding: 0; margin: 0 0 2.5em 0; }
+			.tech-pills li { border: 1px solid #e2e2e2; border-radius: 2em; padding: 0.3em 1em; font-size: 0.75em; color: #787878; }
+			.case-wrap h2 { font-size: 1.2em; border-left: 4px solid #5b52a3; padding-left: 0.5em; margin-top: 2.5em; color: #454545; }
+			.case-figure { margin: 2em 0; }
+			.case-figure img { width: 100%; border-radius: 4px; display: block; }
+			.case-figure figcaption { font-size: 0.8em; color: #b2b2b2; margin-top: 0.6em; }
+			.hero-caption { font-size: 0.8em; color: #b2b2b2; font-style: italic; margin: 0.6em 0 0 0; }
+			.case-note { border-left: 4px solid #d68a45; padding: 0.2em 0 0.2em 1em; color: #787878; font-size: 0.85em; margin: 1.5em 0; }
+			.case-actions { margin-top: 3em; }
+			.case-wrap ul.default { margin: 0 0 2em 0; padding-left: 1.2em; list-style: disc; }
+			.case-wrap ul.default li { margin-bottom: 0.6em; color: #a2a2a2; }
+			.case-wrap p { color: #a2a2a2; }
+			.case-degree { color:#c2c2c2; font-size:0.78em; font-style:italic; margin: 3em 0 0 0; }
+			.case-details { margin: 2.5em 0; border:1px solid #e2e2e2; border-radius:6px; padding: 0.2em 1.2em; }
+			.case-details summary { cursor:pointer; font-weight:600; color:#5b52a3; padding:1em 0; }
+			.case-details summary:hover { color:#d68a45; }
+			.case-details pre { background:#f7f7f7; border-radius:4px; padding:1em; overflow-x:auto; font-size:0.78em; line-height:1.5em; margin: 1em 0; }
+			.case-details code { background:none; padding:0; font-size:1em; }
+			.case-details p { color:#a2a2a2; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div class="case-wrap">
+			<a class="case-back" href="../index.html#projects">&larr; Back to Portfolio</a>
+			<header class="case-hero">
+				<h1>Asteroids Game</h1>
+				<p class="case-meta">Data Structures Coursework &middot; team of 3 &middot; Java &middot; May 2022</p>
+				<ul class="tech-pills">
+					<li>Java</li>
+					<li>AWT / Swing</li>
+					<li>Computational Geometry</li>
+					<li>Collision Detection</li>
+				</ul>
+			</header>
+
+			<div class="case-figure">
+				<img src="../images/fulls/03.jpg" alt="Illustrative recreation of the Asteroids game scene" />
+				<p class="hero-caption">Illustrative recreation of the game scene, not an actual screenshot.</p>
+			</div>
+
+			<h2>Overview</h2>
+			<p>A classic Asteroids-style arcade game, built in stages ("milestones") on top of an instructor-provided Java game-engine skeleton (an abstract Game/Shape/Polygon framework) for a Data Structures course.</p>
+
+			<h2>What We Built</h2>
+			<ul class="default"><li>Ship movement, rotation, and screen wraparound, with space-to-fire controls</li><li>Randomly generated polygon asteroids with their own wraparound movement</li><li>Ray-casting, point-in-polygon collision detection between bullets/ship and asteroids</li><li>A twinkling starfield background and a hit-flash/invulnerability window after a collision</li><li>Win/lose end states based on lives and asteroids cleared</li></ul>
+
+			<h2>What We Learned</h2>
+			<ul class="default">
+				<li><strong>Skills:</strong> computational geometry (ray-casting / point-in-polygon), extending an abstract object-oriented framework, and event-driven input handling.</li>
+				<li><strong>Where it's used:</strong> point-in-polygon and collision detection are foundational techniques behind any 2D game engine, and behind GIS/mapping systems more broadly.</li>
+				<li><strong>Reflection:</strong> working inside someone else's architecture (the instructor's game skeleton) instead of a blank slate was its own skill &mdash; understanding someone else's abstractions well enough to build on top of them.</li>
+			</ul>
+
+			<p class="case-note">Built with two teammates as part of the Data Structures coursework, on top of an instructor-provided game-engine skeleton.</p>
+
+			<details class="case-details">
+				<summary>Technical Deep-Dive: Ray-Casting Collision Detection</summary>
+				<p><strong>Why ray-casting works, geometrically.</strong> Picture a test point and an arrow drawn from it off to infinity in any fixed direction. If that point sits <em>outside</em> a polygon, the arrow enters and exits the shape in pairs &mdash; every crossing in has a matching crossing out &mdash; so the total number of edges it crosses is even (including zero, if it misses the shape entirely). If the point sits <em>inside</em> the polygon, the arrow has to cross one more boundary to escape to infinity than it does to arrive, so the crossing count is always odd. That parity trick (odd = inside, even = outside) is the entire algorithm; the code below just counts how many of the polygon's edges the ray crosses without ever computing an actual intersection point.</p>
+				<p>Built on top of an instructor-provided abstract <code>Polygon</code>/<code>Shape</code> framework. Every game object &mdash; ship, bullets, asteroids &mdash; is a polygon defined by a set of points, an offset, and a rotation. Collision detection uses the ray-casting (point-in-polygon) algorithm: cast a ray from the test point and count how many polygon edges it crosses &mdash; an odd number means the point is inside.</p>
+				<pre><code>public boolean contains(Point point) {
+    Point[] points = getPoints();
+    double crossingNumber = 0;
+    for (int i = 0, j = 1; i &lt; shape.length; i++, j=(j+1)%shape.length) {
+        if ((((points[i].x &lt; point.x) &amp;&amp; (point.x &lt;= points[j].x)) ||
+                ((points[j].x &lt; point.x) &amp;&amp; (point.x &lt;= points[i].x))) &amp;&amp;
+                (point.y &gt; points[i].y + (points[j].y-points[i].y)/
+                        (points[j].x - points[i].x) * (point.x - points[i].x))) {
+            crossingNumber++;
+        }
+    }
+    return crossingNumber % 2 == 1;
+}</code></pre>
+				<p><strong>Why inheritance here, not just a shared interface.</strong> The ship, the bullets, and the asteroids all genuinely <em>are</em> polygons &mdash; they all have points, a position offset, and a rotation, and they all need the exact same collision-detection math. Making <code>Ship extends Polygon</code> is an "is-a" relationship: the ship inherits <code>contains()</code>, point rotation, and rendering for free, and only adds what's actually specific to being a ship (thrust, firing, lives). That's the practical test for when inheritance is the right tool versus overkill: the subclass should be able to honestly say "I am a more specific version of the parent," not just "I happen to reuse some of its code."</p>
+				<p>The ship extends <code>Polygon</code> and implements <code>KeyListener</code> directly, so movement is just state the polygon reads each frame &mdash; arrow keys flip booleans, and <code>move()</code> applies forward thrust along the current rotation with screen wraparound:</p>
+				<pre><code>if (forward) {
+    position.x += 3 * Math.cos(Math.toRadians(rotation));
+    position.y += 3 * Math.sin(Math.toRadians(rotation));
+    if (position.x &gt; Asteroids.SCREEN_WIDTH) position.x -= Asteroids.SCREEN_WIDTH;
+    else if (position.x &lt; 0) position.x += Asteroids.SCREEN_WIDTH;
+    // ...same wraparound check for y against SCREEN_HEIGHT
+}</code></pre>
+			</details>
+
+			<div class="case-actions">
+				<ul class="actions">
+					<li><a href="https://github.com/dcd0130/Asteroids-Game" target="_blank" class="button primary">View Code on GitHub</a></li>
+					<li><a href="../index.html#projects" class="button">Back to Portfolio</a></li>
+				</ul>
+				<p class="case-degree">Coursework project &mdash; Bachelor of Science, Computer Information Systems &amp; Finance &mdash; Westminster College</p>
+			</div>
+		</div>
+	</body>
+</html>

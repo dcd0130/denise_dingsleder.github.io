@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Unemployment vs. Government Spending — Denise Dingsleder</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="R analysis replicating and Monte Carlo stress-testing a Taylor-rule critique of government spending and unemployment, using FRED data 1947-2023." />
+		<link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			body { background: #fff; }
+			.case-wrap { max-width: 760px; margin: 0 auto; padding: 3em 1.5em 6em 1.5em; }
+			.case-back { display: inline-block; margin-bottom: 2.5em; font-size: 0.8em; }
+			.case-hero h1 { font-size: 1.8em; border-left: 4px solid #5b52a3; padding-left: 0.5em; color: #454545; margin-bottom: 0.4em; }
+			.case-meta { color: #b2b2b2; font-size: 0.85em; margin: 0 0 2em 0; }
+			.tech-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em; padding: 0; margin: 0 0 2.5em 0; }
+			.tech-pills li { border: 1px solid #e2e2e2; border-radius: 2em; padding: 0.3em 1em; font-size: 0.75em; color: #787878; }
+			.case-wrap h2 { font-size: 1.2em; border-left: 4px solid #5b52a3; padding-left: 0.5em; margin-top: 2.5em; color: #454545; }
+			.case-figure { margin: 2em 0; }
+			.case-figure img { width: 100%; border-radius: 4px; display: block; }
+			.case-figure figcaption { font-size: 0.8em; color: #b2b2b2; margin-top: 0.6em; }
+			.hero-caption { font-size: 0.8em; color: #b2b2b2; font-style: italic; margin: 0.6em 0 0 0; }
+			.case-note { border-left: 4px solid #d68a45; padding: 0.2em 0 0.2em 1em; color: #787878; font-size: 0.85em; margin: 1.5em 0; }
+			.case-actions { margin-top: 3em; }
+			.case-wrap ul.default { margin: 0 0 2em 0; padding-left: 1.2em; list-style: disc; }
+			.case-wrap ul.default li { margin-bottom: 0.6em; color: #a2a2a2; }
+			.case-wrap p { color: #a2a2a2; }
+			.case-degree { color:#c2c2c2; font-size:0.78em; font-style:italic; margin: 3em 0 0 0; }
+			.case-details { margin: 2.5em 0; border:1px solid #e2e2e2; border-radius:6px; padding: 0.2em 1.2em; }
+			.case-details summary { cursor:pointer; font-weight:600; color:#5b52a3; padding:1em 0; }
+			.case-details summary:hover { color:#d68a45; }
+			.case-details pre { background:#f7f7f7; border-radius:4px; padding:1em; overflow-x:auto; font-size:0.78em; line-height:1.5em; margin: 1em 0; }
+			.case-details code { background:none; padding:0; font-size:1em; }
+			.case-details p { color:#a2a2a2; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div class="case-wrap">
+			<a class="case-back" href="../index.html#projects">&larr; Back to Portfolio</a>
+			<header class="case-hero">
+				<h1>Unemployment vs. Government Spending</h1>
+				<p class="case-meta">Quantitative Methods in Finance (Prof. Tony Cookson) &middot; R &middot; December 2023</p>
+				<ul class="tech-pills">
+					<li>R / R Markdown</li>
+					<li>Regression Analysis</li>
+					<li>Monte Carlo Simulation</li>
+					<li>FRED Data</li>
+				</ul>
+			</header>
+
+			<div class="case-figure">
+				<img src="../images/projects/unemployment-hero.jpg" alt="Regression of unemployment rate against government spending as percent of GDP" />
+				
+			</div>
+
+			<h2>Overview</h2>
+			<p>Economist John Taylor argued that higher government spending, as a percent of GDP, is associated with higher unemployment, using U.S. data from 1990&ndash;2010. This project replicates that analysis with quarterly FRED data from 1947&ndash;2023, then stress-tests it against the Justin Wolfers-style critique that a result like Taylor's can emerge simply from cherry-picking a favorable time window &mdash; even in data with no real relationship at all.</p>
+
+			<h2>What I Built</h2>
+			<p>I built a data pipeline merging unemployment, GDP, and government spending series from FRED, then fit a regression of the unemployment rate on spending-as-percent-of-GDP interacted with decade, to test whether the relationship Taylor found is stable over time. To test the cherry-picking critique directly, I ran a Monte Carlo simulation: 1,000 trials, each generating two independent random series and searching across sub-windows for the single most favorable correlation, compared against the full-sample correlation of the same random data.</p>
+
+			<h2>What I Learned</h2>
+			<ul class="default">
+				<li><strong>Skills:</strong> R programming, regression with interaction terms, designing a Monte Carlo simulation from scratch, and critically re-testing a published finding instead of taking it at face value.</li>
+				<li><strong>Where it's used:</strong> cherry-picking / data-snooping is a real risk in empirical finance and economics research &mdash; funds and central banks guard against exactly this with out-of-sample testing and pre-registered time windows.</li>
+				<li><strong>Reflection:</strong> running the simulation myself made the abstract "correlation isn't causation" warning concrete &mdash; I could see how easily a real-looking pattern falls out of pure noise once you let yourself pick the window after the fact.</li>
+			</ul>
+
+			<div class="case-figure">
+				<img src="../images/projects/montecarlo-histogram.jpg" alt="Monte Carlo histogram of cherry-picked vs full-sample correlations" />
+				<figcaption>1,000 Monte Carlo trials: even with random, uncorrelated data, searching for the best sub-window (amber) reliably finds a higher correlation than the full sample (indigo).</figcaption>
+			</div>
+			<h2>Results</h2>
+			<p>The full regression explains a meaningful share of the variation (adjusted R&sup2; &asymp; 0.65) and, in the baseline period, higher spending is associated with higher unemployment (p &lt; 0.001) &mdash; the direction Taylor reported. But the interaction terms show this relationship is not stable: it strengthens in some decades and weakens or reverses in others. The Monte Carlo simulation shows why that matters: searching sub-windows of purely random data still produces a modest positive correlation (mean &asymp; 0.024) that is significantly higher than the full-sample correlation (mean &asymp; 0.00, Welch t-test p &lt; 2.2e-16). Together, this supports treating Taylor's original 1990&ndash;2010 finding with caution rather than as a stable, universal relationship.</p>
+
+			<details class="case-details">
+				<summary>Technical Deep-Dive: Regression, Monte Carlo &amp; What the Numbers Mean</summary>
+				<p><strong>The basic idea, in plain terms.</strong> A <em>correlation</em> is just a number between -1 and 1 that says how closely two things move together: 0 means no relationship, and the closer to 1 or -1, the stronger the relationship. A <em>Monte Carlo simulation</em> means running an experiment thousands of times with fresh random data each time, purely to see what patterns show up by chance alone &mdash; it's a way to build a "control group" for statistics. And <em>statistically significant</em> (usually shown as a p-value) answers one specific question: if there were truly no real relationship at all, how likely is it we'd still see a difference this large just from random luck? A small p-value (conventionally under 0.05, and certainly under 0.001) means "very unlikely to be luck" &mdash; it doesn't prove the effect is big or important, only that it's probably real.</p>
+				<p><strong>Step 1 &mdash; does spending predict unemployment?</strong> Written in R / R Markdown. After merging the FRED series (unemployment, GDP, government spending) by date and computing spending as a percent of GDP, the core regression tests whether the spending&ndash;unemployment relationship holds across decades:</p>
+				<pre><code>years &lt;- as.integer(format(merged_dat$Date, "%Y"))
+decades &lt;- as.factor((years %/% 10) * 10)
+summary(lm(percent ~ spending_gdp * decades, data = merged_dat))</code></pre>
+				<p>The interaction term (<code>spending_gdp * decades</code>) is what lets the slope vary by decade instead of assuming one fixed relationship. The model's <em>adjusted R&sup2; &asymp; 0.65</em> means the model explains about 65% of the quarter-to-quarter variation in unemployment &mdash; a genuinely strong fit for messy real-world economic data. But that's an average across all decades; that's what exposes the instability discussed in the Results section above &mdash; the relationship is real on average, but it isn't the same relationship every decade.</p>
+				<p><strong>Step 2 &mdash; but could a "finding" like this just be luck?</strong> This is the cherry-picking critique: if you're allowed to search through history and report only the time window that looks best, you can make almost any two unrelated things look connected. To test how big that effect can be, the second half of the script runs a 1,000-trial Monte Carlo simulation using pure, made-up random noise (numbers with, by construction, zero real relationship to each other) and asks: how much fake "signal" does cherry-picking manufacture out of nothing?</p>
+				<pre><code>simulate_cherry_picking &lt;- function(num_replications = 1000, total_quarters = 256, min_quarters = 60) {
+  cherry_picked_correlations &lt;- numeric(num_replications)
+  full_sample_correlations &lt;- numeric(num_replications)
+
+  for (i in 1:num_replications) {
+    x &lt;- rnorm(total_quarters)
+    y &lt;- rnorm(total_quarters)
+    full_sample_correlations[i] &lt;- cor(x, y)
+
+    max_correlation &lt;- -Inf
+    for (j in (total_quarters - min_quarters + 1):total_quarters) {
+      start_quarter &lt;- total_quarters - j + 1
+      end_quarter &lt;- total_quarters
+      cherry_correlation &lt;- cor(x[start_quarter:end_quarter], y[start_quarter:end_quarter])
+      max_correlation &lt;- max(max_correlation, cherry_correlation)
+    }
+    cherry_picked_correlations[i] &lt;- max_correlation
+  }
+  list(cherry_picked = cherry_picked_correlations, full_sample = full_sample_correlations)
+}</code></pre>
+				<p>Each of the 1,000 trials generates two completely independent random series (<code>rnorm()</code>, no real relationship by construction), then searches every possible sub-window of that fake data for the single highest correlation it can find. Repeating this 1,000 times builds up two distributions: what correlation you'd typically see using the <em>full</em> random dataset (it should hover around 0, since there's really nothing there), versus what you'd see if you were allowed to <em>cherry-pick</em> the best-looking window each time.</p>
+				<p><strong>What the result means.</strong> The full-sample correlations averaged almost exactly 0, as expected from random noise. But the cherry-picked correlations averaged about 0.024 &mdash; small in absolute terms, but a Welch t-test comparing the two distributions returned p &lt; 2.2e-16 (essentially zero probability this gap is a coincidence). In plain English: even with data that has <em>no real relationship whatsoever</em>, letting yourself pick the most flattering time window reliably produces a modest, fake-looking correlation. That's exactly the mechanism the Wolfers critique warns about, and it's why the Results section above treats Taylor's original 1990&ndash;2010 finding with caution rather than as a settled fact.</p>
+			</details>
+
+			<div class="case-actions">
+				<ul class="actions">
+					<li><a href="https://github.com/dcd0130/Unemployment-Rates-vs-Government-Spending-as-percent-of-GDP" target="_blank" class="button primary">View Code on GitHub</a></li>
+					<li><a href="../index.html#projects" class="button">Back to Portfolio</a></li>
+				</ul>
+				<p class="case-degree">Coursework project &mdash; Master of Science in Finance &mdash; University of Colorado Boulder, Leeds School of Business</p>
+			</div>
+		</div>
+	</body>
+</html>

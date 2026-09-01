@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Senior Project: D3 E-Commerce — Denise Dingsleder</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Full-stack Django e-commerce site built as a Computer Information Systems senior capstone, deployed for AWS Elastic Beanstalk." />
+		<link rel="icon" type="image/x-icon" href="../images/favicon/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../images/favicon/favicon-16.png" />
+		<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<style>
+			body { background: #fff; }
+			.case-wrap { max-width: 760px; margin: 0 auto; padding: 3em 1.5em 6em 1.5em; }
+			.case-back { display: inline-block; margin-bottom: 2.5em; font-size: 0.8em; }
+			.case-hero h1 { font-size: 1.8em; border-left: 4px solid #5b52a3; padding-left: 0.5em; color: #454545; margin-bottom: 0.4em; }
+			.case-meta { color: #b2b2b2; font-size: 0.85em; margin: 0 0 2em 0; }
+			.tech-pills { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5em; padding: 0; margin: 0 0 2.5em 0; }
+			.tech-pills li { border: 1px solid #e2e2e2; border-radius: 2em; padding: 0.3em 1em; font-size: 0.75em; color: #787878; }
+			.case-wrap h2 { font-size: 1.2em; border-left: 4px solid #5b52a3; padding-left: 0.5em; margin-top: 2.5em; color: #454545; }
+			.case-figure { margin: 2em 0; }
+			.case-figure img { width: 100%; border-radius: 4px; display: block; }
+			.case-figure figcaption { font-size: 0.8em; color: #b2b2b2; margin-top: 0.6em; }
+			.hero-caption { font-size: 0.8em; color: #b2b2b2; font-style: italic; margin: 0.6em 0 0 0; }
+			.case-note { border-left: 4px solid #d68a45; padding: 0.2em 0 0.2em 1em; color: #787878; font-size: 0.85em; margin: 1.5em 0; }
+			.case-actions { margin-top: 3em; }
+			.case-wrap ul.default { margin: 0 0 2em 0; padding-left: 1.2em; list-style: disc; }
+			.case-wrap ul.default li { margin-bottom: 0.6em; color: #a2a2a2; }
+			.case-wrap p { color: #a2a2a2; }
+			.case-degree { color:#c2c2c2; font-size:0.78em; font-style:italic; margin: 3em 0 0 0; }
+			.case-details { margin: 2.5em 0; border:1px solid #e2e2e2; border-radius:6px; padding: 0.2em 1.2em; }
+			.case-details summary { cursor:pointer; font-weight:600; color:#5b52a3; padding:1em 0; }
+			.case-details summary:hover { color:#d68a45; }
+			.case-details pre { background:#f7f7f7; border-radius:4px; padding:1em; overflow-x:auto; font-size:0.78em; line-height:1.5em; margin: 1em 0; }
+			.case-details code { background:none; padding:0; font-size:1em; }
+			.case-details p { color:#a2a2a2; }
+		</style>
+	</head>
+	<body class="is-preload">
+		<div class="case-wrap">
+			<a class="case-back" href="../index.html#projects">&larr; Back to Portfolio</a>
+			<header class="case-hero">
+				<h1>Senior Project: D3 E-Commerce</h1>
+				<p class="case-meta">Computer Information Systems Senior Capstone &middot; Django / Python &middot; May 2023</p>
+				<ul class="tech-pills">
+					<li>Django</li>
+					<li>Python</li>
+					<li>PostgreSQL / SQLite</li>
+					<li>AWS Elastic Beanstalk</li>
+					<li>PayPal API</li>
+				</ul>
+			</header>
+
+			<div class="case-figure">
+				<img src="../images/fulls/01.jpg" alt="Illustrative graphic representing the e-commerce platform" />
+				<p class="hero-caption">Illustrative graphic, not an actual screenshot.</p>
+			</div>
+
+			<h2>Overview</h2>
+			<p>A full-stack e-commerce site for a fictional travel-gear brand, built solo as my Computer Information Systems senior capstone project. The goal was to build a genuinely complete online store &mdash; accounts, cart, checkout, and order management &mdash; rather than a tutorial-scale demo.</p>
+
+			<h2>What I Built</h2>
+			<ul class="default"><li>Custom account system with email verification, login/logout, and email-based password reset</li><li>Session-based cart for guests that merges into the user's account cart on login, with product color/size variations</li><li>Product reviews and ratings</li><li>PayPal checkout integration, order confirmation emails, and full order history</li><li>A content section ("Travel Itineraries") supporting the brand's positioning around travel experiences</li><li>The Django admin moved off the default <code>/admin/</code> path to a custom URL, with a honeypot decoy left at <code>/admin/</code> to log bot login attempts</li><li>Configured for deployment on AWS Elastic Beanstalk with an RDS Postgres database</li></ul>
+
+			<h2>What I Learned</h2>
+			<ul class="default">
+				<li><strong>Skills:</strong> full-stack web development (Django's MTV pattern), authentication and session handling, third-party payment integration, cloud deployment (AWS Elastic Beanstalk, RDS), and basic security hardening.</li>
+				<li><strong>Where it's used:</strong> this is the same architecture pattern behind most production e-commerce backends, and an admin-honeypot decoy is a real technique used to catch automated attackers.</li>
+				<li><strong>Reflection:</strong> building every layer solo &mdash; from database schema to deployment &mdash; showed me how much invisible plumbing (sessions, migrations, environment config) sits under a "simple" online store.</li>
+			</ul>
+
+
+			<details class="case-details">
+				<summary>Technical Deep-Dive: Django Models, ORM &amp; Sessions</summary>
+				<p><strong>What an ORM is actually doing.</strong> Django's Object-Relational Mapper lets you write Python classes instead of hand-written SQL, then translates your Python calls into real SQL behind the scenes. <code>Product.objects.filter(category=categories, is_available=True)</code> doesn't loop over Python objects &mdash; it compiles down to something like <code>SELECT * FROM product WHERE category_id = ? AND is_available = 1</code> and runs it against the database. The <code>ForeignKey(Category, on_delete=models.CASCADE)</code> line is the ORM's way of declaring a real relational foreign key: every product row stores a category ID, and <code>on_delete=CASCADE</code> tells the database what to do to a product if its category is ever deleted (delete it too, rather than leave an orphaned reference).</p>
+				<pre><code>class Product(models.Model):
+    product_name  = models.CharField(max_length=200, unique=True)
+    slug          = models.SlugField(max_length=200, unique=True)
+    price         = models.IntegerField()
+    images        = models.ImageField(upload_to='photos/products')
+    stock         = models.IntegerField()
+    is_available  = models.BooleanField(default=True)
+    category      = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def averageReview(self):
+        reviews = ReviewRating.objects.filter(product=self, status=True).aggregate(average=Avg('rating'))
+        avg = 0
+        if reviews['average'] is not None:
+            avg = float(reviews['average'])
+        return avg</code></pre>
+				<p>The store view handles both the full catalog and per-category browsing, with pagination on either path:</p>
+				<pre><code>def store(request, category_slug=None):
+    if category_slug != None:
+        categories = get_object_or_404(Category, slug=category_slug)
+        products = Product.objects.filter(category=categories, is_available=True)
+        paginator = Paginator(products, 1)
+    else:
+        products = Product.objects.all().filter(is_available=True).order_by('id')
+        paginator = Paginator(products, 3)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    ...</code></pre>
+				<p><strong>How the guest cart actually works.</strong> A browser that isn't logged in still has a <em>session</em> &mdash; a small piece of state Django keeps on the server and points to with a cookie in the visitor's browser. The cart ties itself to that session key rather than to a user account:</p>
+				<pre><code>def _cart_id(request):
+    cart = request.session.session_key
+    if not cart:
+        cart = request.session.create()
+    return cart</code></pre>
+				<p>Every cart lookup in the app branches on <code>request.user.is_authenticated</code>: logged-in users' carts are found by <code>user=request.user</code>, guests' carts are found by <code>cart_id=_cart_id(request)</code>. That's the mechanism behind the guest-cart-merges-on-login feature mentioned above &mdash; the same cart data model works for both cases, with the session key standing in for an account until the visitor actually creates one.</p>
+			</details>
+
+			<div class="case-actions">
+				<ul class="actions">
+					<li><a href="https://github.com/dcd0130/D3" target="_blank" class="button primary">View Code on GitHub</a></li>
+					<li><a href="../index.html#projects" class="button">Back to Portfolio</a></li>
+				</ul>
+				<p class="case-degree">Coursework project &mdash; Bachelor of Science, Computer Information Systems &amp; Finance &mdash; Westminster College</p>
+			</div>
+		</div>
+	</body>
+</html>
